@@ -31,8 +31,12 @@ namespace ScottPlot.Statistics
         public double[] highOutliers { get; private set; }
         public double maxNonOutlier { get; private set; }
         public double minNonOutlier { get; private set; }
-        public int n { get { return values.Length; } }
-        public double span { get { return sortedValues.Last() - sortedValues.First(); } }
+
+        public int n
+        { get { return values.Length; } }
+
+        public double span
+        { get { return sortedValues.Last() - sortedValues.First(); } }
 
         /// <summary>
         /// Generate random values with a normal distribution
@@ -119,7 +123,6 @@ namespace ScottPlot.Statistics
             {
                 if (sortedValues[i] < lowerBoundary)
                 {
-
                 }
                 else
                 {
@@ -132,7 +135,6 @@ namespace ScottPlot.Statistics
             {
                 if (sortedValues[i] > upperBoundary)
                 {
-
                 }
                 else
                 {
@@ -181,6 +183,40 @@ namespace ScottPlot.Statistics
             }
 
             return ys;
+        }
+    }
+
+    /// <summary>
+    /// 集合扩展类
+    /// </summary>
+    public static class CollectionExtensions
+    {
+        /// <summary>
+        /// Gets the median of the source.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static T GetMedian<T>(this IEnumerable<T> source)
+        {
+            // Create a copy of the input, and sort the copy
+            var temp = source.ToArray();
+            Array.Sort(temp);
+
+            var count = temp.Length;
+            if (count == 0)
+            {
+                throw new InvalidOperationException("Empty collection");
+            }
+
+            if (count % 2 == 0)
+            {
+                // Count is even, average two middle elements
+                var a = temp[count / 2 - 1];
+                return a;
+            }
+
+            // Count is odd, return the middle element
+            return temp[count / 2];
         }
     }
 }
