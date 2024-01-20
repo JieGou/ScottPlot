@@ -77,6 +77,7 @@ namespace ScottPlotTests.Statistics
                 new Student() { Name = "17",ScoreNumber=15 },
                 new Student() { Name = "18",ScoreNumber=15 },
             };
+            colPerDim = colPerDim.OrderBy(x => x.ScoreNumber).ToList();
             var outliers = colPerDim.Outliers(multiplier);
         }
     }
